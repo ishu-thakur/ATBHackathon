@@ -29,7 +29,7 @@ public class ATBServiceController {
 	@Autowired
 	public AtbRepository atbRepository;
 
-	@PostMapping(value = "/atb/service", consumes = "application/xml" , produces = "application/xml")
+	@PostMapping(value = "/atb/service", consumes = "application/xml")
 	public ResponseEntity<String> findValue(@RequestBody String xml) throws ParserConfigurationException, SAXException, IOException {
 		String body = "";
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
