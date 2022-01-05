@@ -1,0 +1,51 @@
+package com.greycampus.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.greycampus.Entity.AtbEntity;
+import com.greycampus.repository.AtbRepository;
+import com.greycampus.services.SequenceGeneratorService;
+
+@RestController
+public class AdminController {
+
+	@Autowired
+	public AtbRepository atbRepository;
+
+	@Autowired
+	private SequenceGeneratorService service;
+
+	@PostMapping(value = "/canned-response", consumes = "application/json")
+	public ResponseEntity<?> register(@RequestBody AtbEntity atbEntity) {
+		atbEntity.setId(service.getSequenceNumber(AtbEntity.SEQUENCE_NAME));
+		AtbEntity insert = atbRepository.insert(atbEntity);
+		return new ResponseEntity<AtbEntity>(insert, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/login")
+	public ResponseEntity<?> login(int id) {
+		Optional<AtbEntity> findData = atbRepository.findById((long) id);
+		return new ResponseEntity<Optional>(findData, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/findAll")
+	public List<AtbEntity> getAll() {
+		return atbRepository.findAll();
+	}
+
+	@DeleteMapping(value = "/delete")
+	public ResponseEntity<?> delete(int id) {
+		atbRepository.deleteById((long) id);
+		return new ResponseEntity<String>("Data have been deleted", HttpStatus.OK);
+	}
+
+}

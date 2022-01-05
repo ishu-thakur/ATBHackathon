@@ -1,0 +1,19 @@
+package com.greycampus.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AtbController {
+
+	@RequestMapping
+	public List<Student> getAllStudents() {
+
+	}
+
+	public String insert() {
+		return "Student created";
+	}
+}

@@ -1,0 +1,7 @@
+package com.greycampus;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface AtbRepository extends MongoRepository<AtbEntity, Long> {
+
+}

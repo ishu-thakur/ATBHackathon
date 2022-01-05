@@ -1,0 +1,5 @@
+package com.greycampus;
+
+public enum AtbEntity {
+
+}

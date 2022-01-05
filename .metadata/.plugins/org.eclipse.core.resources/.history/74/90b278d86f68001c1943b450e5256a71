@@ -1,0 +1,50 @@
+package com.greycampus.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.greycampus.Entity.AtbEntity;
+import com.greycampus.repository.AtbRepository;
+import com.greycampus.services.SequenceGeneratorService;
+
+@RestController
+public class AtbController {
+
+	@Autowired
+	public AtbRepository atbRepository;
+
+	@Autowired
+	private SequenceGeneratorService service;
+
+	@PostMapping(value = "/register")
+	public ResponseEntity<AtbEntity> register(@RequestBody AtbEntity atbEntity) {
+		if(atbEntity!=null)
+		{
+			atbEntity.setId(service.getSequenceNumber(AtbEntity.SEQUENCE_NAME));
+			AtbEntity insert = atbRepository.insert(atbEntity);
+			return new ResponseEntity<AtbEntity>(insert,HttpStatus.OK);	
+		}
+		return new ResponseEntity<>("Please insert the data",HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	@GetMapping(value = "/login")
+	public Optional<AtbEntity>login(int id){
+		return atbRepository.findById((long) id);
+	}
+	
+	@GetMapping(value = "/findAll")
+	public ResponseEntity<AtbEntity> getAll() {
+		 List<AtbEntity> listAll = atbRepository.findAll();
+		 return new ResponseEntity<AtbEntity>((AtbEntity) listAll,HttpStatus.OK);
+	}
+	
+	@DeleteMapping()
+}

@@ -1,0 +1,44 @@
+package com.greycampus.controller;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import com.greycampus.Entity.AtbEntity;
+import com.greycampus.repository.AtbRepository;
+import com.greycampus.services.SequenceGeneratorService;
+
+@RestController
+public class AtbController {
+
+	@Autowired
+	public AtbRepository atbRepository;
+
+	@Autowired
+	private SequenceGeneratorService service;
+
+	@PostMapping(value = "/register")
+	public ResponseEntity<AtbEntity> register(@RequestBody AtbEntity atbEntity) {
+		atbEntity.setId(service.getSequenceNumber(AtbEntity.SEQUENCE_NAME));
+		atbRepository.insert(atbEntity);
+		return new ResponseEntity<AtbEntity>(atbEntity,HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/login")
+	public Optional<AtbEntity> loging id) {
+		return atbRepository.findById(id);
+	}
+	
+	@GetMapping(value = "/findAll")
+	public Response<AtbEntity> getAll() {
+		return atbRepository.findAll();
+	}
+	
+	@DeleteMapping()
+}

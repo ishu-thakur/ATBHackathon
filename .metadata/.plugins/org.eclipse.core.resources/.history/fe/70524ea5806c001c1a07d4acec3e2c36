@@ -1,0 +1,12 @@
+package com.greycampus.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.greycampus.Entity.AtbServiceEntity;
+
+public class ATBServiceController {
+
+	@PostMapping(value = "/atb/service",consumes="application/xml")
+	public void findValue(AtbServiceEntity atbServiceEntity) {
+	}
+}

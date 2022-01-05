@@ -1,0 +1,36 @@
+package com.greycampus.controller;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.greycampus.Entity.AtbEntity;
+import com.greycampus.repository.AtbRepository;
+
+import Services.SequenceGeneratorService;
+
+@RestController
+public class AtbController {
+
+	@Autowired
+	public AtbRepository atbRepository;
+
+	@Autowired
+	private SequenceGeneratorService service;
+
+	@PostMapping(value = "/insert")
+	public AtbEntity insert(@RequestBody AtbEntity atbEntity) {
+		atbEntity.setId(service.getSequenceNumber(AtbEntity.SEQUENCE_NAME));
+		return atbRepository.insert(atbEntity);
+	}
+
+	@GetMapping(value = "/findOne")
+	public Optional<AtbEntity> findOne(long id) {
+		return atbRepository.findById(id);
+	}
+
+}

@@ -1,0 +1,14 @@
+package com.greycampus.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AtbController {
+
+	@RequestMapping
+	public List<Student> getAllStudents() {
+
+	}
+
+}

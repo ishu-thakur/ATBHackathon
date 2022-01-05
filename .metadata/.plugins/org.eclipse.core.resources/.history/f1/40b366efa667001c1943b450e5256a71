@@ -1,0 +1,2 @@
+server.port=4000
+spring.data.mongodb.uri=mongodb://localhost:4000/atbdb
